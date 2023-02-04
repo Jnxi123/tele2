@@ -23,7 +23,7 @@ Here are the Available command(s)
 <b>3: /generate_image to generate image based on the description you provided</b>\n                        
 <i>Note: This bot is created by Neo AI.</i>\n
 <pre>This bot is created by</pre>\n<b>Neo Ai</b>
-<b>Join the Neo Ai https://t.me/NeoAiPortal )
+<b>Join NEO AI</b>\n<a href='https://t.me/NeoAiPortal'>Neo AI</a>""",parse_mode='html')
             
         # Check if the user is requesting an image
         elif "generate_image" in message.text.lower():
