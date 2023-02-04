@@ -11,7 +11,7 @@ bot = telebot.TeleBot(YOUR_TBOT_TOKEN)
 @bot.message_handler(commands=['start'])
 def send_welcome(message):
     bot.send_message(message.chat.id, """
-                    <b>Hi!</b> I'm a bot that uses the <b>ChatGPT</b> and <b>DALL-E</b> language models to generate responses to your messages. To get started, just send me a /help to get the list of all the command(s)""", parse_mode='html')
+                    <b>Hi!</b> I am Neo AI, that responses to your messages, I could also generate an image depending on your preferences. To get started, just send me a /help to get the list of all the command(s)""", parse_mode='html')
     
 @bot.message_handler(func=lambda message: True)
 def respond_to_message(message):
@@ -21,9 +21,9 @@ Here are the Available command(s)
 <b>1: /Start to start the bot</b>
 <b>2: /help to get this help text again</b>
 <b>3: /generate_image to generate image based on the description you provided</b>\n                        
-<i>Note: This bot is still in beta phase and is available for free only for testing purposes.</i>\n
-<pre>This bot is created by</pre>\n<b>Arbind Singh</b>
-<b>You can Follow me on</b>\n<a href='https://github.com/habitual69'>Github</a>""",parse_mode='html')
+<i>Note: This bot is created by Neo AI.</i>\n
+<pre>This bot is created by</pre>\n<b>Neo Ai</b>
+<b>Join the Neo Ai https://t.me/NeoAiPortal )
             
         # Check if the user is requesting an image
         elif "generate_image" in message.text.lower():
