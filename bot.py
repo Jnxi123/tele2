@@ -1,7 +1,8 @@
 import openai
 import telebot
 
-from config import YOUR_TBOT_TOKEN, YOUR_OAPI_KEY
+YOUR_OAPI_KEY = "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"
+YOUR_TBOT_TOKEN = "6159128326:AAFXf62Awz4-EDkFZ0TPqtAlrSoyOtR1bBY"
 
 # Initialize the ChatGPT and DALL-E models
 openai.api_key = YOUR_OAPI_KEY
