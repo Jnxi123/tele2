@@ -1,5 +1,6 @@
 import openai
 import telebot
+
 from config import YOUR_TBOT_TOKEN, YOUR_OAPI_KEY
 
 # Initialize the ChatGPT and DALL-E models
@@ -8,50 +9,51 @@ model_engine = "text-davinci-003"
 
 # Create a TeleBot instance
 bot = telebot.TeleBot(YOUR_TBOT_TOKEN)
+
+
 @bot.message_handler(commands=['start'])
 def send_welcome(message):
+    bot.send_message(message.chat.id, """<b>Hi! I am Neo AI</b> <i>(NEW AI)</i> an assistant bot made to be the NEW 
+    AI, I'll generate responses to your messages with my own intellect. To get started, just send me a /help to get 
+    the list of all the commands""")
+
+
+@bot.message_handler(commands=['help'])
+def send_help(message):
     bot.send_message(message.chat.id, """
-                    <b>Hi!</b> I am Neo AI, that responses to your messages, I could also generate an image depending on your preferences. To get started, just send me a /help to get the list of all the command(s)""", parse_mode='html')
-    
-@bot.message_handler(func=lambda message: True)
-def respond_to_message(message):
-        if "help" in message.text.lower():
-            bot.send_message(message.chat.id, """
 Here are the Available command(s)
 <b>1: /Start to start the bot</b>
 <b>2: /help to get this help text again</b>
-<b>3: /generate_image to generate image based on the description you provided</b>\n                        
-<i>Note: This bot is created by Neo AI.</i>\n
-<pre>This bot is created by</pre>\n<b>Neo Ai</b>
-<b>Join NEO AI</b>\n<a href='https://t.me/NeoAiPortal'>Neo AI</a>""",parse_mode='html')
-            
-        # Check if the user is requesting an image
-        elif "generate_image" in message.text.lower():
-            # Use the DALL-E model to generate an image
-            image_url = openai.Image.create(
-            prompt=f"{message.text}",
-            size="1024x1024",
-            n=1,
-            response_format="url"
-            ).data[0].url
-            bot.send_photo(message.chat.id, image_url)
-        else:
-        # Use the ChatGPT model to generate a response
-            response = openai.Completion.create(
-            engine=model_engine,
-            prompt=f"User: {message.text}\nBot: ",
-            max_tokens=3000,
-            n=1,
-            temperature=0.7,
-            ).choices[0].text
+<b>3: /nai if you have anything you want to ask or tell</b>\n                        
+<i>Note: This bot is still in development.</i>\n
+<pre>This bot is created by</pre>\n<b>Neo AI</b>
+<b>Join NEO AI</b>\n<a href='https://t.me/NeoAiPortal'>Neo AI</a>""")
 
-            # If the response is too long, send the remaining part as next message
-            if len(response) > 4096:
-                bot.send_message(message.chat.id, response[:4096] + '...')
-                bot.send_message(message.chat.id, response[4096:])
-            else:
-                # Send the generated response to the user
-                bot.send_message(message.chat.id, response)
+
+@bot.message_handler(commands=['start'])
+def send_welcome(message):
+    bot.send_message(message.chat.id,
+                     "Hi there! I'm Nai, your funny and sarcastic AI friend. How can I help you today?")
+
+
+# noinspection PyArgumentList
+@bot.message_handler()
+def respond_to_message(message):
+    if "nai" in message.text.lower():
+        # Use the GPT-3 model to generate a response
+        response = openai.Completion.create(
+            engine=model_engine,
+            prompt="Nai, respond to the user in a funny and sarcastic way: " + message.text,
+            max_tokens=1024,
+            n=1,
+            stop=None,
+            temperature=0.5,
+        ).choices[0].text
+
+        # Send the response to the user
+        bot.send_message(message.chat.id, response)
+
+
 def run_bot():
     try:
         # Start the bot
@@ -60,6 +62,7 @@ def run_bot():
         # If the bot crashes, print the error message and start the bot again
         print(e)
         run_bot()
+
 
 # Run the bot indefinitely
 while True:
